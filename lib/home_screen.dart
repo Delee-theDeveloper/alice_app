@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key}); // ✅ constructor
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("A.L.I.C.E. Home")),
+      appBar: AppBar(title: const Text("Home")),
       body: const Center(
         child: Text(
-          "Welcome! You are logged in ✅",
-          style: TextStyle(fontSize: 20),
+          "Welcome to the Home Screen!",
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
       ),
     );

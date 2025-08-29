@@ -20,8 +20,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Password reset email sent!")),
       );
-      Navigator.pushReplacementNamed(context, '/login');
-      // go back to login
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message ?? "Failed to reset password")),
@@ -34,8 +33,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Forgot Password")),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFFe0f2fe), Color(0xFFf8fafc), Color(0xFFe0f2fe)],
@@ -43,29 +43,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             end: Alignment.bottomRight,
           ),
         ),
-        child: Center(
-          child: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Logo
                 Image.asset(
                   "assets/images/A.L.I.C.E_Official_Logo.png",
                   width: 100,
                   height: 100,
                 ),
                 const SizedBox(height: 20),
-
-                // Instruction text
                 const Text(
-                  "Enter your email and we'll send you a link to reset your password.",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
+                  "Reset Password",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
-                const SizedBox(height: 30),
-
-                // Email field
+                const SizedBox(height: 16),
+                const Text(
+                  "Enter your email and we'll send you a reset link.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black87, fontSize: 16),
+                ),
+                const SizedBox(height: 24),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
@@ -74,9 +77,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     prefixIcon: Icon(Icons.email_outlined),
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                // Button
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: _isLoading ? null : _resetPassword,
                   style: ElevatedButton.styleFrom(
@@ -88,7 +89,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   child: _isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text("Send Reset Link"),
+                      : const Text(
+                          "Send Reset Link",
+                          style: TextStyle(color: Colors.white),
+                        ),
                 ),
               ],
             ),
